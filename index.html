@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>垂类项目 SOP</title>
+<style>
+:root {
+  --owner:#6C63FF; --pmo:#5B6FD6; --own:#12857B;
+  --main:#1E2A4A; --sub:#5A6488; --bdr:#E0E4F0; --wht:#fff; --bg:#F5F6FB;
+  --shd:0 1px 6px rgba(91,111,214,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'PingFang SC','Microsoft YaHei',-apple-system,sans-serif;background:var(--bg);color:var(--main);font-size:14px;line-height:1.7}
+
+/*── Page header ── */
+.ph{background:var(--wht);padding:14px 28px 12px;border-bottom:1px solid var(--bdr)}
+.ph-inner{width:100%;max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.ph-title h1{font-size:1.15rem;font-weight:700}
+.ph-title p{font-size:.78rem;color:var(--sub);margin-top:2px}
+.status{font-size:.74rem;font-weight:700;color:#B45309;background:#FFF3E0;border:1px solid #FBD9A6;border-radius:20px;padding:4px 13px;white-space:nowrap}
+
+/* ── Section ── */
+.section{width:calc(100% - 56px);max-width:1180px;margin:22px auto 0}
+.section:last-child{margin-bottom:48px}
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.section-num{width:24px;height:24px;border-radius:7px;background:#5B6FD6;color:var(--wht);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;flex-shrink:0}
+.section-title{font-size:.98rem;font-weight:700}
+.section-desc{font-size:.76rem;color:var(--sub);margin:0 0 12px 34px}
+.section.narrow{max-width:1180px;margin-left:auto;margin-right:auto}
+.hint{font-size:.74rem;color:var(--sub);margin-top:10px}
+
+/* ── 1 背景：纯文字，全宽 ── */
+.bg-text{font-size:.85rem;line-height:2;color:#2C3567}
+
+/* ── 2 全流程总览（横向自适应） ── */
+.fblock{background:var(--wht);border:1px solid var(--bdr);border-radius:12px;padding:14px 16px;box-shadow:var(--shd)}
+.frow{display:flex;align-items:stretch}
+.frow + .frow{margin-top:10px;border-top:1px solid #F0F2F8;padding-top:10px}
+.rl{flex:0 0 22px;width:22px;font-size:.62rem;font-weight:700;color:#5B6FD6;writing-mode:vertical-rl;text-align:center;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#F2F4FF 0%,#ECEEFF 100%);border-right:2px solid rgba(91,111,214,.16);border-radius:6px 0 0 6px;letter-spacing:.04em;white-space:nowrap}
+.ftrack{flex:1;min-width:0;display:flex;align-items:stretch}
+.fcol{flex:1 1 0;min-width:0;padding:0 3px;display:flex;flex-direction:column}
+.far{flex:0 0 16px;display:flex;align-items:center;justify-content:center;color:#BFC7E4;font-size:.8rem;font-weight:700}
+.shead{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:5px;text-align:center}
+.shead .si{font-size:.58rem;font-weight:700;color:#4A5470;background:#E8EBF6;border:1px solid #D6DCF0;border-radius:4px;padding:0 4px;line-height:1.5;flex-shrink:0}
+.shead .st{font-size:.72rem;font-weight:700;color:#2C3567;line-height:1.25}
+.sbox{border:2px solid var(--bdr);border-radius:9px;padding:8px 7px;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:var(--wht)}
+.sp{border-color:rgba(108,99,255,.35);background:rgba(108,99,255,.04)}
+.spmo{border-color:rgba(91,111,214,.4);background:rgba(91,111,214,.05)}
+.sg{border-color:rgba(232,115,12,.4);background:rgba(255,140,66,.05)}
+.sown{border-color:rgba(46,196,182,.45);background:rgba(46,196,182,.05)}
+.send{border-color:rgba(123,31,162,.35);background:rgba(123,31,162,.05)}
+.sd{font-size:.63rem;color:var(--sub);text-align:center;line-height:1.45}
+.mtg{font-size:.56rem;font-weight:700;color:#B45309;background:#FFF3E0;border:1px solid #FBD9A6;border-radius:3px;padding:0 4px;margin-top:3px;white-space:nowrap}
+.badge{display:inline-flex;align-items:center;justify-content:center;padding:3px 9px;border-radius:10px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.b-own{background:rgba(108,99,255,.12);color:var(--owner)}
+.b-pmo{background:rgba(91,111,214,.12);color:var(--pmo)}
+.b-exec{background:rgba(46,196,182,.16);color:var(--own)}
+.b-end{background:rgba(30,42,74,.07);color:#4A5470}
+.b-grey{background:#F1F3FA;color:#8A93B8;font-size:.64rem}
+.b-mtg{background:#FFF3E0;color:#B45309;font-size:.64rem}
+.center{display:flex;align-items:center;justify-content:center;min-height:32px}
+
+/* ── 3 / 4 阶段行布局 ── */
+.sl{display:flex;flex-direction:column;gap:8px}
+.stage{display:grid;grid-template-columns:170px 1fr 1fr;gap:12px;background:var(--wht);border:1px solid var(--bdr);border-radius:10px;padding:10px 12px;box-shadow:var(--shd)}
+.stage-id{display:flex;gap:8px;align-items:flex-start;padding-top:2px}
+.sid-n{min-width:24px;padding:0 5px;border-radius:5px;background:#E8EBF6;color:#4A5470;font-size:.64rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1.7}
+.sid-t{font-size:.8rem;font-weight:700;color:#2C3567;line-height:1.35}
+.sid-s{font-size:.64rem;color:var(--sub);margin-top:3px}
+.cell{background:#FAFBFF;border:1px solid #EDF0F8;border-radius:8px;padding:8px 10px}
+.ct{font-size:.66rem;font-weight:700;color:#5B6FD6;margin-bottom:4px;letter-spacing:.02em}
+.cb{font-size:.74rem;line-height:1.8;color:#2C3567}
+.cb b{color:#1E2A4A}
+.cbn{color:var(--sub);font-size:.66rem}
+.dt{display:inline-block;font-size:.63rem;font-weight:600;background:#E8F5E9;color:#2E7D32;border-radius:3px;padding:1px 5px;margin-right:3px}
+.dt2{background:#E8EAF6;color:#3949AB}
+.dt3{background:#FFF3E0;color:#B45309}
+.dt4{background:#E3F2FD;color:#1565C0}
+.di{margin-bottom:2px}
+.tk{color:#B45309;font-weight:700;background:#FFF3E0;border-radius:3px;padding:1px 5px;font-size:.68rem;display:inline-block;margin-bottom:2px}
+.ts{color:var(--sub);font-size:.68rem;line-height:1.6}
+
+/* ── 5 机制 ── */
+.mgrid{display:flex;flex-direction:column;gap:10px}
+.mcard{background:var(--wht);border:1px solid var(--bdr);border-radius:12px;padding:13px 16px;box-shadow:var(--shd);display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:start}
+.mcard h4{font-size:.85rem;display:flex;align-items:center;gap:6px;line-height:1.5}
+.mnum{min-width:24px;padding:0 5px;border-radius:5px;background:#E8EBF6;color:#4A5470;font-size:.64rem;display:inline-flex;align-items:center;justify-content:center;font-weight:700;line-height:1.7}
+.mcard p{font-size:.74rem;line-height:1.8;color:#2C3567}
+.draft{margin-top:8px;border:1px dashed #A6B2DC;border-radius:8px;padding:7px 10px;background:#FAFBFF;font-size:.69rem;color:#5A6488;line-height:1.7}
+.draft b{color:#4A55A0}
+
+/* ── 表格 ── */
+.pt{width:100%;border-collapse:collapse;font-size:.8rem;background:var(--wht);border-radius:12px;overflow:hidden;box-shadow:var(--shd);margin-top:8px}
+.pt th{background:#F5F6FF;padding:9px 13px;text-align:left;font-weight:600;color:var(--sub);border-bottom:2px solid var(--bdr);white-space:nowrap}
+.pt td{padding:9px 13px;border-bottom:1px solid #F0F2F8;vertical-align:top;line-height:1.75}
+.pt tr:last-child td{border-bottom:none}
+.pt a{color:#3949AB;text-decoration:none;font-weight:600}
+.pt a:hover{text-decoration:underline}
+.snum{font-size:.68rem;font-weight:700;color:#3949AB;background:#E8EAF6;border-radius:3px;padding:1px 5px;margin-right:4px}
+.sub-pt{width:100%;border-collapse:collapse;font-size:.74rem;margin-top:8px;border:1px solid var(--bdr);border-radius:8px;overflow:hidden}
+.sub-pt th{background:#FAFBFF;padding:7px 10px;text-align:left;color:var(--sub);border-bottom:1px solid var(--bdr)}
+.sub-pt td{padding:7px 10px;border-bottom:1px solid #F2F4FA;vertical-align:top;line-height:1.7}
+.sub-pt tr:last-child td{border-bottom:none}
+
+/* ── 6 工具卡 ── */
+.tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.tcard{background:var(--wht);border:1px solid var(--bdr);border-radius:12px;padding:13px 15px;box-shadow:var(--shd)}
+.tcard h4{font-size:.84rem;margin-bottom:7px}
+.tcard .td{font-size:.73rem;line-height:1.8;color:#2C3567}
+.tcard .tl{margin-top:8px;font-size:.73rem}
+.who{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.who span{font-size:.68rem;background:#F4F6FF;border:1px solid var(--bdr);border-radius:4px;padding:2px 7px;color:#3D4B8C}
+
+@media(max-width:1180px){
+  .ftrack{overflow-x:auto;padding-bottom:4px}
+  .fcol{flex:0 0 132px;min-width:132px}
+}
+@media(max-width:980px){
+  .stage{grid-template-columns:1fr;gap:8px}
+  .mcard{grid-template-columns:1fr;gap:6px}
+  .tgrid{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff}
+  .section{page-break-inside:avoid;margin:10px 0}
+  .ftrack{overflow:visible}
+  .fcol{flex:1 1 0;min-width:0}
+}
+</style>
+</head>
+<body>
+
+<div class="ph">
+  <div class="ph-inner">
+    <div class="ph-title">
+      <h1>垂类项目 SOP</h1>
+      <p>2026.10 版 &nbsp;·&nbsp; 9 个阶段解读全流程 &nbsp;·&nbsp; 立项准入 · 权责 · 评审机制</p>
+    </div>
+    <span class="status">当前状态：评审中</span>
+  </div>
+</div>
+
+<!-- ══ 1 背景 ══ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title">背景</div>
+  </div>
+  <p class="bg-text">伴随业务发展，垂类项目数量与资源投入持续增加。结合上季度垂类项目实际运行情况，当前存在项目零散发起、无统一立项入口、项目目标对齐不充分等情况。为解决落地中问题，拉通垂类各相关方制定立项 SOP，明确立项准入标准、权责与评审机制，提升项目决策效率，降低项目推进风险，规范立项流程，支撑项目有序落地。</p>
+</div>
+
+<!-- ══ 2 全流程总览 ══ -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title">全流程总览</div>
+  </div>
+  <div class="section-desc">9 个阶段串起立项到结项的全链路；橙色「会议」标签表示该阶段以会议形式推进。</div>
+  <div class="fblock">
+    <div class="frow">
+      <div class="rl">阶段划分</div>
+      <div class="ftrack">
+        <div class="fcol">
+          <div class="shead"><span class="si">S1</span><span class="st">想法提出</span></div>
+          <div class="sbox sp"><div class="sd">提交想法卡<br>来源不限</div></div>
+        </div><div class="far">→</div>
+        <div class="fcol">
+          <div class="shead"><span class="si">S2</span><span class="st">项目预沟通</span></div>
+          <div class="sbox spmo"><div class="sd">判断是否值得<br>进入调研</div><span class="mtg">会议</span></div>
+        </div><div class="far">→</div>
+        <div class="fcol">
+          <div class="shead"><span class="si">S3</span><span class="st">可行性调研-内部</span></div>
+          <div class="sbox sp"><div class="sd">内部相关方<br>背书</div></div>
+        </div><div class="far">→</div>
+        <div class="fcol">
+          <div class="shead"><span class="si">S4</span><span class="st">可行性调研-外部</span></div>
+          <div class="sbox sp"><div class="sd">外部依赖<br>可兑现性</div></div>
+        </div><div class="far">→</div>
+        <div class="fcol">
+          <div class="shead"><span class="si">S5</span><span class="st">项目目标预审</span></div>
+          <div class="sbox sg"><div class="sd">目标与验收口径<br>对齐老板</div><span class="mtg">门槛</span></div>
+        </div><div class="far">→</div>
+        <div class="fcol">
+          <div class="shead"><span class="si">S6</span><span class="st">立项评审会</span></div>
+          <div class="sbox spmo"><div class="sd">过六要素<br>过不过</div><span class="mtg">会议</span></div>
+        </div><div class="far">→</div>
+        <div class="fcol">
+          <div class="shead"><span class="si">S7</span><span class="st">优先级排序</span></div>
+          <div class="sbox spmo"><div class="sd">垂类方向内<br>排绝对序</div></div>
+        </div><div class="far">→</div>
+        <div class="fcol">
+          <div class="shead"><span class="si">S8</span><span class="st">项目落地期</span></div>
+          <div class="sbox sown"><div class="sd">按周排期<br>目标进度对账</div></div>
+        </div><div class="far">→</div>
+        <div class="fcol">
+          <div class="shead"><span class="si">S9</span><span class="st">项目结项</span></div>
+          <div class="sbox send"><div class="sd">对照目标<br>逐项验收</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="rl">形式说明</div>
+      <div class="ftrack">
+        <div class="fcol"><div class="center"><span class="badge b-grey">提交</span></div></div><div class="far"></div>
+        <div class="fcol"><div class="center"><span class="badge b-mtg">会议</span></div></div><div class="far"></div>
+        <div class="fcol"><div class="center"><span class="badge b-grey">调研</span></div></div><div class="far"></div>
+        <div class="fcol"><div class="center"><span class="badge b-grey">调研</span></div></div><div class="far"></div>
+        <div class="fcol"><div class="center"><span class="badge b-grey">对齐</span></div></div><div class="far"></div>
+        <div class="fcol"><div class="center"><span class="badge b-mtg">会议</span></div></div><div class="far"></div>
+        <div class="fcol"><div class="center"><span class="badge b-grey">排序</span></div></div><div class="far"></div>
+        <div class="fcol"><div class="center"><span class="badge b-grey">执行</span></div></div><div class="far"></div>
+        <div class="fcol"><div class="center"><span class="badge b-end">终态</span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hint">S3 与 S4 并行推进；S5 通过后方可进入 S6；S6 / S7 结论合计 2 个工作日内输出。</div>
+</div>
+
+<!-- ══ 3 各阶段关键动作和交付物 ══ -->
+<div class="section narrow">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title">各阶段关键动作和交付物 / 通过标准</div>
+  </div>
+  <div class="section-desc">每个阶段要做什么、交出什么、过不过的判定标准（Gate）。</div>
+  <div class="sl">
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S1</span><div><div class="sid-t">想法提出</div><div class="sid-s">形式：提交</div></div></div>
+      <div class="cell"><div class="ct">关键动作</div><div class="cb">提出「想法卡」（≤1 页）：问题、初步目标、期望节奏。<br><span class="cbn">来源不限：老板、产品、引擎、模型等。</span></div></div>
+      <div class="cell"><div class="ct">交付物 / 通过标准</div><div class="cb">
+        <div class="di"><span class="dt">交付物</span>① 想法卡</div>
+        <div class="di"><span class="dt">交付物</span>② 发起方团队负责人指定调研 POC</div>
+        <div class="di"><span class="dt2">Gate</span>发起方团队负责人评审通过，想法卡进入立项池</div>
+      </div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S2</span><div><div class="sid-t">项目预沟通</div><div class="sid-s">形式：会议</div></div></div>
+      <div class="cell"><div class="ct">关键动作</div><div class="cb">PMO 组织，发起方与必要相关方参会：判断是否值得进入调研，明确<b>调研范围、相关方清单、调研责任人与时间盒</b>。</div></div>
+      <div class="cell"><div class="ct">交付物 / 通过标准</div><div class="cb">
+        <div class="di"><span class="dt">交付物</span>预沟通结论：进入调研 / 暂缓 / 合并到在途项目 / 关闭</div>
+        <div class="di"><span class="dt">交付物</span>调研范围与相关方清单</div>
+        <div class="di"><span class="dt2">Gate</span>结论需有明确理由并留档</div>
+      </div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S3</span><div><div class="sid-t">可行性调研-内部</div><div class="sid-s">形式：调研</div></div></div>
+      <div class="cell"><div class="ct">关键动作</div><div class="cb">定向卷入内部相关方背书：评测、产品、引擎、模型、生态、运营、跨团队合作（按相关度选派，每方 1 人对接）。</div></div>
+      <div class="cell"><div class="ct">交付物 / 通过标准</div><div class="cb">
+        <div class="di"><span class="dt">交付物</span>立项文档（六要素）</div>
+        1. 问题与背景<br>2. 目标与基线（可量化验收口径）<br>3. 定位与打法<br>4. 资源与里程碑<br>5. 主 R 与团队分工、协作机制<br>6. 验收标准（含数据来源与评测方案）
+        <div class="di" style="margin-top:3px"><span class="dt2">Gate</span>六要素齐全，各相关方明确「支持 / 有保留支持 / 反对」及理由</div>
+      </div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S4</span><div><div class="sid-t">可行性调研-外部</div><div class="sid-s">形式：调研（与 ③ 并行）</div></div></div>
+      <div class="cell"><div class="ct">关键动作</div><div class="cb">确认外部依赖：司内合作方（如 fit）、司外合作方（如京东）的<b>接口、数据、排期</b>是否可兑现，规划里程碑。</div></div>
+      <div class="cell"><div class="ct">交付物 / 通过标准</div><div class="cb">
+        <div class="di"><span class="dt">交付物</span>并入立项文档六要素（外部依赖可兑现性写入「资源与里程碑」）</div>
+        <div class="di"><span class="dt2">Gate</span>外部依赖有明确排期或书面结论</div>
+      </div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S5</span><div><div class="sid-t">项目目标预审</div><div class="sid-s">形式：对齐</div></div></div>
+      <div class="cell"><div class="ct">关键动作</div><div class="cb">就<b>目标与验收口径</b>与老板对齐，先行消除分歧，避免评审会上翻案。<br><span class="cbn">参照目标预审自检卡（见 6）</span></div></div>
+      <div class="cell"><div class="ct">交付物 / 通过标准</div><div class="cb">
+        <div class="di"><span class="dt2">Gate</span>目标与验收口径与老板对齐</div>
+        <span style="color:#2E7D32;font-weight:700">OK →</span> 进入正式立项<br>
+        <span style="color:#C62828;font-weight:700">不 OK →</span> 回退调整或放弃立项
+      </div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S6</span><div><div class="sid-t">立项评审会</div><div class="sid-s">形式：会议</div></div></div>
+      <div class="cell"><div class="ct">关键动作</div><div class="cb">PMO 组织，季度<b>常规窗口期集中评审</b>；外部机会可穿插实时立项（走临时立项通道）。</div></div>
+      <div class="cell"><div class="ct">交付物 / 通过标准</div><div class="cb">
+        <div class="di"><span class="dt">交付物</span>① 项目是否通过</div>
+        <div class="di"><span class="dt">交付物</span>② 六要素是否通过</div>
+        <div class="di"><span class="dt">交付物</span>③ 明确目标对账频率</div>
+        <div class="di"><span class="dt">交付物</span>④ 明确项目是否自闭环 or 需 PMO 参与</div>
+        <div class="di"><span class="dt2">不通过 →</span>退回补充（限时 1 周）或关闭并留档理由</div>
+      </div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S7</span><div><div class="sid-t">优先级排序</div><div class="sid-s">形式：排序</div></div></div>
+      <div class="cell"><div class="ct">关键动作</div><div class="cb">PMO 推进，垂类方向内项目<b>排绝对序</b>（不并列）。</div></div>
+      <div class="cell"><div class="ct">交付物 / 通过标准</div><div class="cb">
+        <div class="di"><span class="dt">交付物</span>优先级绝对序</div>
+        <div class="di"><span class="dt2">Gate</span>排序与分级公示到垂类全员，异议 48h 内提出，PMO 拉通对齐</div>
+      </div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S8</span><div><div class="sid-t">项目落地期</div><div class="sid-s">形式：执行</div></div></div>
+      <div class="cell"><div class="ct">关键动作</div><div class="cb">按计划推进；<br>按约定执行<b>目标进度对账</b>。</div></div>
+      <div class="cell"><div class="ct">交付物 / 通过标准</div><div class="cb">
+        <div class="di"><span class="dt">交付物</span>【T+1 周】① 项目排期表（by 周）</div>
+        <div class="di"><span class="dt">②</span>按需输出周报</div>
+        <div class="di"><span class="dt">③</span>风险 list</div>
+        <div class="di"><span class="dt">④</span>依赖 list</div>
+        <div class="di"><span class="dt2">Gate</span>排期表经主 R 与 PMO 确认后归档，作为周报兑现率基线</div>
+      </div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S9</span><div><div class="sid-t">项目结项</div><div class="sid-s">形式：终态</div></div></div>
+      <div class="cell"><div class="ct">关键动作</div><div class="cb">对照项目目标<b>逐项验收</b>；未达标项目需给出明确结论。</div></div>
+      <div class="cell"><div class="ct">交付物 / 通过标准</div><div class="cb">
+        <div class="di"><span class="dt2">Gate</span>结项状态四选一</div>
+        达标结项 · 判负归档 · 中止 · 转入下季度（需重新确认目标）
+        <div class="di" style="margin-top:3px"><span style="color:#C62828;font-weight:700">禁止「无结论顺延」</span></div>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ 4 各阶段负责人和时效要求 ══ -->
+<div class="section narrow">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-title">各阶段负责人和时效要求</div>
+  </div>
+  <div class="section-desc">谁推动进入下一状态，以及各阶段的时间盒子。</div>
+  <div class="sl">
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S1</span><div><div class="sid-t">想法提出</div><div class="sid-s">形式：提交</div></div></div>
+      <div class="cell"><div class="ct">阶段负责人</div><div class="cb"><span class="badge b-own">发起方</span></div></div>
+      <div class="cell"><div class="ct">时效要求</div><div class="cb"><span class="tk">季度规划期集中收口</span><div class="ts">平时随时可提</div></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S2</span><div><div class="sid-t">项目预沟通</div><div class="sid-s">形式：会议</div></div></div>
+      <div class="cell"><div class="ct">阶段负责人</div><div class="cb"><span class="badge b-pmo">PMO</span></div></div>
+      <div class="cell"><div class="ct">时效要求</div><div class="cb"><span class="tk">T+2 天开会</span><div class="ts">发起方团队指定调研 POC 后</div></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S3</span><div><div class="sid-t">可行性调研-内部</div><div class="sid-s">形式：调研</div></div></div>
+      <div class="cell"><div class="ct">阶段负责人</div><div class="cb"><span class="badge b-own">发起方</span></div></div>
+      <div class="cell"><div class="ct">时效要求</div><div class="cb"><span class="tk">T+2 周内摸底完成</span></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S4</span><div><div class="sid-t">可行性调研-外部</div><div class="sid-s">形式：调研（与 ③ 并行）</div></div></div>
+      <div class="cell"><div class="ct">阶段负责人</div><div class="cb"><span class="badge b-own">发起方</span></div></div>
+      <div class="cell"><div class="ct">时效要求</div><div class="cb"><span class="tk">T+2 周内</span><div class="ts">与 ③ 并行</div></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S5</span><div><div class="sid-t">项目目标预审</div><div class="sid-s">形式：对齐</div></div></div>
+      <div class="cell"><div class="ct">阶段负责人</div><div class="cb"><span class="badge b-own">发起方</span></div></div>
+      <div class="cell"><div class="ct">时效要求</div><div class="cb"><span class="tk">T+1 天</span><div class="ts">调研完成后</div></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S6</span><div><div class="sid-t">立项评审会</div><div class="sid-s">形式：会议</div></div></div>
+      <div class="cell"><div class="ct">阶段负责人</div><div class="cb"><span class="badge b-pmo">PMO</span></div></div>
+      <div class="cell"><div class="ct">时效要求</div><div class="cb"><span class="tk">T+2 天内出结论</span><div class="ts">季度常规窗口期集中评审</div></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S7</span><div><div class="sid-t">优先级排序</div><div class="sid-s">形式：排序</div></div></div>
+      <div class="cell"><div class="ct">阶段负责人</div><div class="cb"><span class="badge b-pmo">PMO</span></div></div>
+      <div class="cell"><div class="ct">时效要求</div><div class="cb"><span class="tk">T+1 天</span><div class="ts">评审后</div></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S8</span><div><div class="sid-t">项目落地期</div><div class="sid-s">形式：执行</div></div></div>
+      <div class="cell"><div class="ct">阶段负责人</div><div class="cb"><span class="badge b-exec">项目 owner</span></div></div>
+      <div class="cell"><div class="ct">时效要求</div><div class="cb"><span class="tk">T+1 周内出 by 周排期</span><div class="ts">按约定执行目标进度对账</div></div></div>
+    </div>
+
+    <div class="stage">
+      <div class="stage-id"><span class="sid-n">S9</span><div><div class="sid-t">项目结项</div><div class="sid-s">形式：终态</div></div></div>
+      <div class="cell"><div class="ct">阶段负责人</div><div class="cb"><span class="badge b-exec">项目 owner</span></div></div>
+      <div class="cell"><div class="ct">时效要求</div><div class="cb"><span class="tk">季度末统一结项</span><div class="ts">or 按项目规划执行结项</div></div></div>
+    </div>
+
+  </div>
+  <div class="hint">T = 想法被受理 / 进入 S2 项目预沟通之日。评审结论与优先级合计 2 个工作日内输出（见 7）。</div>
+</div>
+
+<!-- ══ 5 贯穿性机制 ══ -->
+<div class="section narrow">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-title">贯穿性机制</div>
+  </div>
+  <div class="section-desc">不绑定单一阶段、贯穿全流程的三条机制。</div>
+  <div class="mgrid">
+    <div class="mcard">
+      <h4><span class="mnum">M1</span>临时立项通道</h4>
+      <div class="mbody"><p>为适应业务野蛮生长，对<b>外部机会 / 突发需求</b>可以不等季度窗口，临时发起立项流程。<br>· 临时插入项目须<b>注明挤占哪个在途项目</b><br>· 若准入插入项目，需<b>重新更新垂类项目优先级排序</b></p></div>
+    </div>
+    <div class="mcard">
+      <h4><span class="mnum">M2</span>垂类风险管理机制</h4>
+      <div class="mbody">
+        <p>风险与依赖以 list 形式周更，卡点在周会上仲裁，阻塞项同步到垂类风险跟踪表。</p>
+        <div class="draft"><b>建议：</b>延期 ≥2 次同步至 PMO 更新至风险跟踪表。</div>
+      </div>
+    </div>
+    <div class="mcard">
+      <h4><span class="mnum">M3</span>目标对账机制</h4>
+      <div class="mbody">
+        <p>按约定节奏对账目标进度，未达标项目需给出明确结论，禁止无结论顺延。</p>
+        <div class="draft"><b>建议：</b>至少季度第 4–5 周做一次中期对账，达成度 &lt;50% 提前预警；目标变更须走评审，单季度 ≤1 次，变更留档。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 6 工具模版 ══ -->
+<div class="section narrow">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div class="section-title">工具模版</div>
+  </div>
+  <div class="section-desc">流程各阶段配套的模板、参会方清单与准入自检卡。</div>
+  <div class="tgrid">
+    <div class="tcard">
+      <h4><span class="snum">T1</span>立项模版（六要素）</h4>
+      <div class="td">问题与背景 / 目标与基线 / 定位与打法 / 资源与里程碑 / 主 R 与分工协作 / 验收标准（含数据来源与评测方案）。</div>
+      <div class="tl"><a href="https://doc.weixin.qq.com/doc/w3_AS4A0gY0AI0CNpFIcQSibQ7S0vf9E?scode=AJEAIQdfAAoDj0uTkuAS4A0gY0AI0" target="_blank">打开立项模版 →</a></div>
+    </div>
+    <div class="tcard">
+      <h4><span class="snum">T2</span>想法卡模版</h4>
+      <div class="td">问题、初步目标、期望节奏（≤1 页）。</div>
+    </div>
+    <div class="tcard">
+      <h4><span class="snum">T3</span>项目预沟通会 · 参会方（PMO 组织）</h4>
+      <div class="who"><span>评测 · shaolin</span><span>产品 · shirlea</span><span>引擎 · jesang</span><span>模型 · jeffhychen</span><span>端和后台 · avis / moonfeng / jiading / brollan（按需）</span><span>生态 · kant</span><span>运营</span></div>
+    </div>
+    <div class="tcard">
+      <h4><span class="snum">T4</span>垂类风险跟踪表 / 目标对账表</h4>
+      <div class="td">风险 list、依赖 list 与目标进度对账的统一载体。</div>
+      <div class="tl"><a href="https://doc.weixin.qq.com/sheet/e3_AS4A0gY0AI0CNZr6q5fASTFOnZpc1?scode=AJEAIQdfAAoZc0aivLAS4A0gY0AI0&tab=k3cjwl" target="_blank">打开跟踪表 →</a></div>
+    </div>
+  </div>
+
+  <h4 style="margin:18px 0 4px;font-size:.86rem"><span class="snum">T5</span>项目目标预审自检卡（准入参照）</h4>
+  <table class="pt">
+    <tr><th style="width:130px">自查项</th><th>标准</th></tr>
+    <tr>
+      <td><b>① 四要素齐全</b></td>
+      <td>指标名与计算口径 · 基线值 · 目标值 · 达成时间</td>
+    </tr>
+    <tr>
+      <td><b>② 目标是否「够高」</b></td>
+      <td>原则：<b>跳一跳够得着</b>。目标改善幅度建议不小于同类项目历史中位幅度，且不低于垂类自身历史最好水平。
+        <table class="sub-pt">
+          <tr><th style="width:150px">目标类型</th><th style="width:230px">强度下限</th><th>说明</th></tr>
+          <tr><td>竞对差距类<br>GSB / SBS / 分位差</td><td>差距收敛 50%<br>或绝对改善 ≥10pp</td><td>若基线差距已 &lt;10pp，则必须定为「追平或反超」，不接受"小幅缩小"。</td></tr>
+          <tr><td>准召类<br>准确率 / 召回率</td><td>基线 &lt;60%：提升 ≥+10pp<br>基线 60–80%：提升 ≥+5pp<br>基线 &gt;80%：提升 ≥+3pp 或达竞对水位</td><td>同一项目不得只提准召中的一个：只优化召回导致准确率下滑，须同时给出护栏指标。</td></tr>
+          <tr><td>体验负向类<br>劝退率 / 无结果率 / badcase 率</td><td>相对下降 ≥20%<br>或绝对下降 ≥5pp</td><td>须注明统计口径（1 分占比 / 分位 / 端效），口径与基线必须同源。</td></tr>
+          <tr><td>能力建设 / 交付类<br>上线功能、引入资源</td><td>必须绑定结果指标</td><td>如健康档案上线一期 MVP 配套记忆准确率。</td></tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td><b>③ 否决清单</b><br><span style="color:#C62828;font-size:.74rem">命中任一条<br>不进正式立项会</span></td>
+      <td>
+        1. 目标缺失或"待定"——如"目标下周产出""待摸底后确定"。<br>
+        2. 基线未实测——基线来自估算、拍脑袋或"最近一次通用题库"等非本项目口径的数据。<br>
+        3. 目标表述模糊——用「xx%」「有提升」「优化」代替具体数值。<br>
+        4. 目标过低——低于强度下限，或低于该垂类历史最好水平（回退型目标）。<br>
+        5. 只有过程指标、无结果指标——只有"完成标注 N 条""训练 N 版""接入 N 家"。<br>
+        6. 目标依赖未落地的外部依赖——fit / 京东尚未握手、无排期，目标视为无效。<br>
+        7. 验收口径未定——没有说明评测集、量级、评测方式，结项时无法判定。
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- ══ 7 角色与职责简表 ══ -->
+<div class="section narrow" style="margin-bottom:48px">
+  <div class="section-header">
+    <div class="section-num" style="background:#7B1FA2">7</div>
+    <div class="section-title">角色与职责简表</div>
+  </div>
+  <div class="section-desc">四类角色的关键任务与红线。</div>
+  <table class="pt">
+    <tr><th style="width:130px">职责</th><th style="width:36%">关键任务</th><th>说明 / 红线</th></tr>
+    <tr>
+      <td><b>发起方</b></td>
+      <td>提交想法卡；主导内外部可行性调研；编写立项文档；推进目标预审</td>
+      <td>调研期不得先动资源、先写代码；<b>目标未对齐不上正式评审会</b></td>
+    </tr>
+    <tr>
+      <td><b>项目 Owner</b></td>
+      <td>落地期第一责任人：排期、周报、风险、依赖推进、结项交付</td>
+      <td>连续 2 周缺周报<b>自动升红灯</b></td>
+    </tr>
+    <tr>
+      <td><b>内部 / 外部相关方</b></td>
+      <td>限时背书：评估可行性、给出资源与排期承诺</td>
+      <td>背书后需兑现承诺；无法兑现须提前告知 Owner 并同步 PMO</td>
+    </tr>
+    <tr>
+      <td><b>PMO</b></td>
+      <td>推进项目预沟通会、立项评审会；推进优先级与定级确认；维护依赖台账、目标进度对账；推进卡点解决</td>
+      <td><b>评审结论与优先级 2 个工作日内输出</b></td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>
